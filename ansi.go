@@ -60,7 +60,8 @@ var (
 	SoftGreenBG  = RGB{0xEC, 0xFD, 0xF5}
 )
 
-// Public sentinel for clarity.
+// Colorizer post-processes a fully formatted message (handles multiline safely).
+type Colorizer func(string) string
 
 // Colorizers you can pass to Log
 var (
