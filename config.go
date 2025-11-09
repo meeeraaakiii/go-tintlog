@@ -62,11 +62,13 @@ func InitializeConfig(userConfig *Config) {
 		)
 	})
 
-	LogPrettyJSON(Cfg, "effective config")
+	Log(Info, GreenText, "%s: %s", "Effective config", Cfg)
 
 	if Cfg.LogDir != "" {
 		// this function will change Cfg.LoggerFilePath and Cfg.LoggerFile
 		err, errMsg := OpenLoggerFile(Cfg.LogDir)
-		QuitIfErrorLoggerIndependent(err, errMsg)
+		if err != nil {
+			Log(Info, RedText, "Err: '%s', errMsg: '%s'", err, errMsg)
+		}
 	}
 }
