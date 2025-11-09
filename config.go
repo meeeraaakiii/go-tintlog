@@ -40,17 +40,17 @@ func defaultConfig() Config {
 		UseTid:             &useTid,
 		TimeFormat:         "2006/Jan/02 15:04:05",
 		LogFileFormat:      "02_Jan_2006_15_04_05.jsonl",
-		LogTimeColor:       color.DimGrayText, // soft “dim white/gray”
+		LogTimeColor:       color.DimGray, // soft “dim white/gray”
 	}
 }
 
 func InitializeConfig(userConfig *Config) {
 	// If not provided - just use defaultConfig
 	if userConfig == nil {
-		Log(Info, color.GreenText, "%s config is %s, keeping %s", "logger", "not provided", "default logger config")
+		Log(Info, color.Green, "%s config is %s, keeping %s", "logger", "not provided", "default logger config")
 		return
 	}
-	Log(Info, color.GreenText, "%s config was %s, using %s", "logger", "provided", "user config")
+	Log(Info, color.Green, "%s config was %s, using %s", "logger", "provided", "user config")
 	// If local Config is provided - use it
 	Cfg = *userConfig
 
@@ -58,19 +58,19 @@ func InitializeConfig(userConfig *Config) {
 	defaultConfig := defaultConfig()
 	ApplyDefaults(&Cfg, defaultConfig, func(field string, defVal any) {
 		Log(
-			Info, color.GreenText,
+			Info, color.Green,
 			"%s field is %s in %s configuration. Using default value: %v",
 			field, "missing", "logger", prettyForStderr(defVal),
 		)
 	})
 
-	Log(Info, color.GreenText, "%s: %s", "Effective config", Cfg)
+	Log(Info, color.Green, "%s: %s", "Effective config", Cfg)
 
 	if Cfg.LogDir != "" {
 		// this function will change Cfg.LoggerFilePath and Cfg.LoggerFile
 		err, errMsg := OpenLoggerFile(Cfg.LogDir)
 		if err != nil {
-			Log(Info, color.RedText, "Err: '%s', errMsg: '%s'", err, errMsg)
+			Log(Info, color.Red, "Err: '%s', errMsg: '%s'", err, errMsg)
 		}
 	}
 }

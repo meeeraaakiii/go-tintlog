@@ -42,13 +42,13 @@ func OpenLoggerFile(logDir string) (err error, errMsg string) {
 
 	LoggerFilePath = filepath.Join(logDir, time.Now().Format(Cfg.LogFileFormat))
 
-	Log(Notice, color.GreenText, "%s log file '%s'", "Creating", LoggerFilePath)
+	Log(Notice, color.Green, "%s log file '%s'", "Creating", LoggerFilePath)
 	LoggerFile, err = os.OpenFile(LoggerFilePath, os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		return err, fmt.Sprintf("Unable to open file: '%s'", LoggerFilePath)
 	}
 
-	Log(Notice1, color.GreenText, "%s log file '%v'", "Created", LoggerFilePath)
+	Log(Notice1, color.Green, "%s log file '%v'", "Created", LoggerFilePath)
 	return nil, ""
 }
 
@@ -56,24 +56,24 @@ func OpenLoggerFile(logDir string) (err error, errMsg string) {
 // Cfg.LoggerFilePath == "" at the point of logger initialization, so
 // it will just print without saving to log file
 func CreateDirIfDoesntExist(path string) (err error, errMsg string) {
-	Log(Info, color.GreenText, "%s dir: '%s'", "Creating", path)
+	Log(Info, color.Green, "%s dir: '%s'", "Creating", path)
 	if path == "" {
-		Log(Verbose2, color.GreenText, "%s", "Dir is an empty string, not creating")
+		Log(Verbose2, color.Green, "%s", "Dir is an empty string, not creating")
 		return nil, ""
 	}
 	_, err = os.Stat(path)
 	if os.IsNotExist(err) {
-		Log(Verbose, color.GreenText, "Dir '%s' doesn't exist", path)
+		Log(Verbose, color.Green, "Dir '%s' doesn't exist", path)
 		err := os.MkdirAll(path, os.ModePerm)
 		if err != nil {
 			return err, fmt.Sprintf("Unable to create dir: %s", path)
 		}
 	} else {
-		Log(Info1, color.GreenText, "Dir '%s' already exists, not creating", path)
+		Log(Info1, color.Green, "Dir '%s' already exists, not creating", path)
 		return nil, ""
 	}
 
-	Log(Info1, color.GreenText, "%s dir: '%s'", "Creating", path)
+	Log(Info1, color.Green, "%s dir: '%s'", "Creating", path)
 
 	return nil, ""
 }
