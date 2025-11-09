@@ -2,14 +2,11 @@ package logger
 
 import (
 	"encoding/base64"
-	"encoding/json"
 	"fmt"
 	"log"
-	"os"
 	"runtime"
 	"strconv"
 	"strings"
-	"time"
 )
 
 // get goroutine id
@@ -23,52 +20,6 @@ func getTid() (tid int) {
 		return -1
 	}
 	return tid
-}
-
-type LogLine struct {
-	Time   time.Time   `json:"time"`
-	TID    int         `json:"tid,omitempty"`
-	Level  LogLevel    `json:"level"`
-	Color  string      `json:"color,omitempty"` // e.g., "Green"
-	Format string      `json:"format"`          // original format string
-	Args   []any       `json:"args"`            // sanitized args (no ANSI)
-}
-
-// --- file I/O ---
-
-func ensureLogFileOpen() error {
-	LoggerFileMutex.Lock()
-	defer LoggerFileMutex.Unlock()
-
-	if LoggerFilePath == "" {
-		return nil
-	}
-	if LoggerFile != nil {
-		return nil
-	}
-	f, err := os.OpenFile(LoggerFilePath, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644)
-	if err != nil {
-		return err
-	}
-	LoggerFile = f
-	return nil
-}
-
-func writeLogJSONL(line LogLine) {
-	if LoggerFilePath == "" {
-		return
-	}
-	if err := ensureLogFileOpen(); err != nil {
-		// best-effort
-		return
-	}
-	b, err := json.Marshal(line)
-	if err != nil {
-		return
-	}
-	LoggerFileMutex.Lock()
-	_, _ = LoggerFile.Write(append(b, '\n'))
-	LoggerFileMutex.Unlock()
 }
 
 // --- arg sanitization for JSON ---
