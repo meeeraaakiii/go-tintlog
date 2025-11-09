@@ -74,84 +74,84 @@ func FgBgColorizer(name string, fg, bg Color, bold bool) Colorizer {
 
 var Colorizers = map[string]Colorizer{
 	// Base hues
-	"Red":    FgColorizer("Red", Red, false),
-	"Orange": FgColorizer("Orange", Orange, false),
-	"Yellow": FgColorizer("Yellow", Yellow, false),
-	"Green":  FgColorizer("Green", Green, false),
-	"Cyan":   FgColorizer("Cyan", Cyan, false),
-	"Blue":   FgColorizer("Blue", Blue, false),
-	"Purple": FgColorizer("Purple", Purple, false),
-	"Gray":   FgColorizer("Gray", Gray, false),
+	"Red":    FgColorizer("Red", RedColor, false),
+	"Orange": FgColorizer("Orange", OrangeColor, false),
+	"Yellow": FgColorizer("Yellow", YellowColor, false),
+	"Green":  FgColorizer("Green", GreenColor, false),
+	"Cyan":   FgColorizer("Cyan", CyanColor, false),
+	"Blue":   FgColorizer("Blue", BlueColor, false),
+	"Purple": FgColorizer("Purple", PurpleColor, false),
+	"Gray":   FgColorizer("Gray", GrayColor, false),
 
 	// Bright tints
-	"BrightRed":    FgColorizer("BrightRed", BrightRed, false),
-	"BrightOrange": FgColorizer("BrightOrange", BrightOrange, false),
-	"BrightYellow": FgColorizer("BrightYellow", BrightYellow, false),
-	"BrightGreen":  FgColorizer("BrightGreen", BrightGreen, false),
-	"BrightCyan":   FgColorizer("BrightCyan", BrightCyan, false),
-	"BrightBlue":   FgColorizer("BrightBlue", BrightBlue, false),
-	"BrightPurple": FgColorizer("BrightPurple", BrightPurple, false),
-	"BrightGray":   FgColorizer("BrightGray", BrightGray, false),
+	"BrightRed":    FgColorizer("BrightRed", BrightRedColor, false),
+	"BrightOrange": FgColorizer("BrightOrange", BrightOrangeColor, false),
+	"BrightYellow": FgColorizer("BrightYellow", BrightYellowColor, false),
+	"BrightGreen":  FgColorizer("BrightGreen", BrightGreenColor, false),
+	"BrightCyan":   FgColorizer("BrightCyan", BrightCyanColor, false),
+	"BrightBlue":   FgColorizer("BrightBlue", BrightBlueColor, false),
+	"BrightPurple": FgColorizer("BrightPurple", BrightPurpleColor, false),
+	"BrightGray":   FgColorizer("BrightGray", BrightGrayColor, false),
 
 	// Dim shades
-	"DimRed":    FgColorizer("DimRed", DimRed, false),
-	"DimOrange": FgColorizer("DimOrange", DimOrange, false),
-	"DimYellow": FgColorizer("DimYellow", DimYellow, false),
-	"DimGreen":  FgColorizer("DimGreen", DimGreen, false),
-	"DimCyan":   FgColorizer("DimCyan", DimCyan, false),
-	"DimBlue":   FgColorizer("DimBlue", DimBlue, false),
-	"DimPurple": FgColorizer("DimPurple", DimPurple, false),
-	"DimGray":   FgColorizer("DimGray", DimGray, false),
+	"DimRed":    FgColorizer("DimRed", DimRedColor, false),
+	"DimOrange": FgColorizer("DimOrange", DimOrangeColor, false),
+	"DimYellow": FgColorizer("DimYellow", DimYellowColor, false),
+	"DimGreen":  FgColorizer("DimGreen", DimGreenColor, false),
+	"DimCyan":   FgColorizer("DimCyan", DimCyanColor, false),
+	"DimBlue":   FgColorizer("DimBlue", DimBlueColor, false),
+	"DimPurple": FgColorizer("DimPurple", DimPurpleColor, false),
+	"DimGray":   FgColorizer("DimGray", DimGrayColor, false),
 
 	// No color
 	"NoColor": {Name: "NoColor", Fn: nil},
 
 	// Example bold presets (add more if you like)
-	"RedBold":           FgColorizer("RedBold", Red, true),
-	"GreenBold":         FgColorizer("GreenBold", Green, true),
-	"BlueBold":          FgColorizer("BlueBold", Blue, true),
-	"RedBackground":     FgBgColorizer("RedBackground", Black, Red, false),
-	"RedBoldBackground": FgBgColorizer("RedBoldBackground", Black, Red, true),
+	"RedBold":           FgColorizer("RedBold", RedColor, true),
+	"GreenBold":         FgColorizer("GreenBold", GreenColor, true),
+	"BlueBold":          FgColorizer("BlueBold", BlueColor, true),
+	"RedBackground":     FgBgColorizer("RedBackground", BlackColor, RedColor, false),
+	"RedBoldBackground": FgBgColorizer("RedBoldBackground", BlackColor, RedColor, true),
 }
 
 /* --------------- convenience aliases (import-friendly) ----------------- */
 
 var (
-	RedText    = Colorizers["Red"]
-	OrangeText = Colorizers["Orange"]
-	YellowText = Colorizers["Yellow"]
-	GreenText  = Colorizers["Green"]
-	CyanText   = Colorizers["Cyan"]
-	BlueText   = Colorizers["Blue"]
-	PurpleText = Colorizers["Purple"]
-	GrayText   = Colorizers["Gray"]
+	Red    = Colorizers["Red"]
+	Orange = Colorizers["Orange"]
+	Yellow = Colorizers["Yellow"]
+	Green  = Colorizers["Green"]
+	Cyan   = Colorizers["Cyan"]
+	Blue   = Colorizers["Blue"]
+	Purple = Colorizers["Purple"]
+	Gray   = Colorizers["Gray"]
 
-	BrightRedText    = Colorizers["BrightRed"]
-	BrightOrangeText = Colorizers["BrightOrange"]
-	BrightYellowText = Colorizers["BrightYellow"]
-	BrightGreenText  = Colorizers["BrightGreen"]
-	BrightCyanText   = Colorizers["BrightCyan"]
-	BrightBlueText   = Colorizers["BrightBlue"]
-	BrightPurpleText = Colorizers["BrightPurple"]
-	BrightGrayText   = Colorizers["BrightGray"]
+	BrightRed    = Colorizers["BrightRed"]
+	BrightOrange = Colorizers["BrightOrange"]
+	BrightYellow = Colorizers["BrightYellow"]
+	BrightGreen  = Colorizers["BrightGreen"]
+	BrightCyan   = Colorizers["BrightCyan"]
+	BrightBlue   = Colorizers["BrightBlue"]
+	BrightPurple = Colorizers["BrightPurple"]
+	BrightGray   = Colorizers["BrightGray"]
 
-	DimRedText    = Colorizers["DimRed"]
-	DimOrangeText = Colorizers["DimOrange"]
-	DimYellowText = Colorizers["DimYellow"]
-	DimGreenText  = Colorizers["DimGreen"]
-	DimCyanText   = Colorizers["DimCyan"]
-	DimBlueText   = Colorizers["DimBlue"]
-	DimPurpleText = Colorizers["DimPurple"]
-	DimGrayText   = Colorizers["DimGray"]
+	DimRed    = Colorizers["DimRed"]
+	DimOrange = Colorizers["DimOrange"]
+	DimYellow = Colorizers["DimYellow"]
+	DimGreen  = Colorizers["DimGreen"]
+	DimCyan   = Colorizers["DimCyan"]
+	DimBlue   = Colorizers["DimBlue"]
+	DimPurple = Colorizers["DimPurple"]
+	DimGray   = Colorizers["DimGray"]
 
 	NoColor = Colorizers["NoColor"]
 
 	// Bold examples
-	RedBoldText   = Colorizers["RedBold"]
-	GreenBoldText = Colorizers["GreenBold"]
-	BlueBoldText  = Colorizers["BlueBold"]
-	RedBackgroundText = Colorizers["RedBackground"]
-	RedBoldBackgroundText = Colorizers["RedBoldBackground"]
+	RedBold   = Colorizers["RedBold"]
+	GreenBold = Colorizers["GreenBold"]
+	BlueBold  = Colorizers["BlueBold"]
+	RedBackground = Colorizers["RedBackground"]
+	RedBoldBackground = Colorizers["RedBoldBackground"]
 )
 
 /* ------------------- registration convenience funcs ------------------- */
