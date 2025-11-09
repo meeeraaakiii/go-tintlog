@@ -10,24 +10,24 @@ import (
 // Cfg.LoggerFilePath == "" at the point of logger initialization, so
 // it will just print without saving to log file
 func CreateDirIfDoesntExist(path string) (err error, errMsg string) {
-	Log(Info, Color, "%s dir: '%s'", "Creating", path)
+	Log(Info, GreenText, "%s dir: '%s'", "Creating", path)
 	if path == "" {
-		Log(Verbose2, Color, "%s", "Dir is an empty string, not creating")
+		Log(Verbose2, GreenText, "%s", "Dir is an empty string, not creating")
 		return nil, ""
 	}
 	_, err = os.Stat(path)
 	if os.IsNotExist(err) {
-		Log(Verbose, Color, "Dir '%s' doesn't exist", path)
+		Log(Verbose, GreenText, "Dir '%s' doesn't exist", path)
 		err := os.MkdirAll(path, os.ModePerm)
 		if err != nil {
 			return err, fmt.Sprintf("Unable to create dir: %s", path)
 		}
 	} else {
-		Log(Info1, Color, "Dir '%s' already exists, not creating", path)
+		Log(Info1, GreenText, "Dir '%s' already exists, not creating", path)
 		return nil, ""
 	}
 
-	Log(Info1, Color, "%s dir: '%s'", "Creating", path)
+	Log(Info1, GreenText, "%s dir: '%s'", "Creating", path)
 
 	return nil, ""
 }

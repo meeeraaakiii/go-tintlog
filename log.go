@@ -15,29 +15,30 @@ var (
 	LoggerOutput      io.Writer = os.Stderr
 	LoggerOutputMutex sync.Mutex
 )
+
+
 // Log prints time (if TimeFormat != ""), [Level], optional [tid], then the message.
 // Prints to stderr only when Cfg.LogLevel >= level, but ALWAYS writes JSONL to file
-// if LoggerFilePath != "" (colorless).
+// if LoggerFilePath != "" (colorless), storing only the color NAME.
 func Log(level LogLevel, colorize Colorizer, format string, args ...any) {
-	// ----- prepare args (colorless vs colored) -----
-	// colorless (for file):
+	// ----- colorless (file) -----
 	bodyColorless := fmt.Sprintf(format, args...)
 	if !strings.HasSuffix(bodyColorless, "\n") {
 		bodyColorless += "\n"
 	}
 
-	// colored (for stderr):
+	// ----- colored (stderr) -----
 	coloredArgs := make([]any, len(args))
 	copy(coloredArgs, args)
-	if colorize != nil {
+	if colorize.Fn != nil {
 		for i, a := range coloredArgs {
 			switch v := a.(type) {
 			case string:
-				coloredArgs[i] = colorize(v)
+				coloredArgs[i] = colorize.Fn(v)
 			case error:
-				coloredArgs[i] = colorize(v.Error())
+				coloredArgs[i] = colorize.Fn(v.Error())
 			case fmt.Stringer:
-				coloredArgs[i] = colorize(v.String())
+				coloredArgs[i] = colorize.Fn(v.String())
 			}
 		}
 	}
@@ -46,20 +47,20 @@ func Log(level LogLevel, colorize Colorizer, format string, args ...any) {
 		bodyColored += "\n"
 	}
 
-	// ----- build timestamp/prefix (shared for stderr only) -----
+	// ----- timestamp/prefix for stderr -----
 	ts := ""
 	if strings.TrimSpace(Cfg.TimeFormat) != "" {
 		raw := time.Now().Format(Cfg.TimeFormat)
-		if Cfg.LogTimeColor != nil {
-			raw = Cfg.LogTimeColor(raw)
+		if Cfg.LogTimeColor.Name != "" && Cfg.LogTimeColor.Fn != nil {
+			raw = Cfg.LogTimeColor.Fn(raw)
 		}
 		ts = raw + " "
 	}
 
 	levelStr := level.String()
 	levelStrColored := levelStr
-	if colorize != nil {
-		levelStrColored = colorize(levelStrColored)
+	if colorize.Fn != nil {
+		levelStrColored = colorize.Fn(levelStrColored)
 	}
 
 	prefix := "[" + levelStrColored + "] "
@@ -67,21 +68,22 @@ func Log(level LogLevel, colorize Colorizer, format string, args ...any) {
 	if Cfg.UseTid != nil && *Cfg.UseTid {
 		tid = getTid()
 		tidStr := strconv.Itoa(tid)
-		if colorize != nil {
-			tidStr = colorize(tidStr)
+		if colorize.Fn != nil {
+			tidStr = colorize.Fn(tidStr)
 		}
 		prefix = "[" + levelStrColored + "][" + tidStr + "] "
 	}
 
-	// ----- ALWAYS write JSONL to file (colorless), regardless of log level -----
+	// ----- ALWAYS write JSONL to file (colorless), include only color name -----
 	writeLogJSONL(LogLine{
 		Time:  time.Now(),
 		TID:   tid,
 		Level: level,
-		Msg:   strings.TrimRight(bodyColorless, "\n"), // store without trailing newline
+		Msg:   strings.TrimRight(bodyColorless, "\n"),
+		Color: colorize.Name,
 	})
 
-	// ----- Print to stderr only if threshold allows -----
+	// ----- Print to stderr gated by level -----
 	if Cfg.LogLevel >= level {
 		LoggerOutputMutex.Lock()
 		_, _ = io.WriteString(LoggerOutput, ts+prefix+bodyColored)

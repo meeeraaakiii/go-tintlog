@@ -45,10 +45,10 @@ func defaultConfig() Config {
 func InitializeConfig(userConfig *Config) {
 	// If not provided - just use defaultConfig
 	if userConfig == nil {
-		Log(Info, Color, "%s config is %s, keeping %s", "logger", "not provided", "default logger config")
+		Log(Info, GreenText, "%s config is %s, keeping %s", "logger", "not provided", "default logger config")
 		return
 	}
-	Log(Info, Color, "%s config was %s, using %s", "logger", "provided", "user config")
+	Log(Info, GreenText, "%s config was %s, using %s", "logger", "provided", "user config")
 	// If local Config is provided - use it
 	Cfg = *userConfig
 
@@ -56,7 +56,7 @@ func InitializeConfig(userConfig *Config) {
 	defaultConfig := defaultConfig()
 	ApplyDefaults(&Cfg, defaultConfig, func(field string, defVal any) {
 		Log(
-			Info, Color,
+			Info, GreenText,
 			"%s field is %s in %s configuration. Using default value: %v",
 			field, "missing", "logger", PrettyValue(defVal),
 		)
