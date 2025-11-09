@@ -14,9 +14,6 @@ var (
 	LoggerOutputMutex sync.Mutex
 )
 
-// Colorizer post-processes a fully formatted message (handles multiline safely).
-type Colorizer func(string) string
-
 // Log formats and writes the message, coloring only the args via colorize.
 func Log(colorize Colorizer, format string, args ...any) {
 	// Colorize arguments only (strings, errors, and fmt.Stringer)
