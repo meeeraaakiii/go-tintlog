@@ -26,10 +26,11 @@ func getTid() (tid int) {
 }
 
 type LogLine struct {
-	Time  time.Time `json:"time"`
-	TID   int       `json:"tid,omitempty"`
-	Level LogLevel  `json:"level"`
-	Msg   string    `json:"msg"`
+	Time   time.Time `json:"time"`
+	TID    int       `json:"tid,omitempty"`
+	Level  LogLevel  `json:"level"`
+	Color  string    `json:"color,omitempty"`  // e.g., "Green"
+	Msg    string    `json:"msg"`
 }
 
 func ensureLogFileOpen() error {

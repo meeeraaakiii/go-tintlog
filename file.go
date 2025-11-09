@@ -32,12 +32,12 @@ func OpenLoggerFile(logDir string) (err error, errMsg string) {
 
 	LoggerFilePath = filepath.Join(logDir, time.Now().Format(Cfg.LogFileFormat))
 
-	Log(Notice, Color, "%s log file '%s'", "Creating", LoggerFilePath)
+	Log(Notice, GreenText, "%s log file '%s'", "Creating", LoggerFilePath)
 	LoggerFile, err = os.OpenFile(LoggerFilePath, os.O_WRONLY|os.O_CREATE, 0644)
 	if err != nil {
 		return err, fmt.Sprintf("Unable to open file: '%s'", LoggerFilePath)
 	}
 
-	Log(Notice1, Color, "%s log file '%v'", "Created", LoggerFilePath)
+	Log(Notice1, GreenText, "%s log file '%v'", "Created", LoggerFilePath)
 	return nil, ""
 }
